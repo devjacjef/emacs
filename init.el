@@ -21,8 +21,17 @@
 ;; Vim Bindings
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-keybinding nil)
   :config
-  (evil-mode))
+  (evil-mode 1))
+
+;; Vim Bindings across Emacs
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
 ;; LSP Support
 (use-package lsp-mode
