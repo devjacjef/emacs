@@ -1,8 +1,16 @@
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;; Getting rid of extra UI elements
+(setq inhibit-splash-screen t)
+(customize-set-variable 'scroll-bar-mode nil)
+(customize-set-variable 'tool-bar-mode nil)
+(customize-set-variable 'menu-bar-mode nil)
 
+;; Line Numbers
 (global-display-line-numbers-mode)
 
+;; Automatic Pairs
+(electric-pair-mode t)
+
+;; Enabling MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -10,21 +18,31 @@
 
 ;; TODO: Break this into multiple files later...
 
+;; Vim Bindings
 (use-package evil
   :ensure t
   :config
   (evil-mode))
 
-;; TODO: Add snippet support
+;; LSP Support
 (use-package lsp-mode
   :ensure t
-  :hook ((web-mode . lsp))
+  :hook ((c-mode . lsp)
+	 (c++-mode . lsp)
+	 (web-mode . lsp))
   :commands lsp)
 
+;; Snippets
+(use-package yasnippet
+  :ensure t
+  :hook (prog-mode . yas-minor-mode))
+
+;; Auto Complete
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode))
 
+;; Web Programming
 (use-package web-mode
   :ensure t
   :mode
@@ -42,7 +60,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(company evil lsp-mode web-mode)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
