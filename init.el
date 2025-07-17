@@ -33,6 +33,10 @@
   :config
   (evil-collection-init))
 
+(use-package magit
+  :bind (("C-x g" . magit-status)
+         ("C-x C-g" . magit-status)))
+
 ;; LSP Support
 (use-package lsp-mode
   :ensure t
