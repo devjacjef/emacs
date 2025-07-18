@@ -4,6 +4,9 @@
 (customize-set-variable 'tool-bar-mode nil)
 (customize-set-variable 'menu-bar-mode nil)
 
+;; Allow hash to be entered  
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
 ;; Line Numbers
 (global-display-line-numbers-mode)
 
@@ -42,8 +45,14 @@
   :ensure t
   :hook ((c-mode . lsp)
 	 (c++-mode . lsp)
-	 (web-mode . lsp))
-  :commands lsp)
+	 (web-mode . lsp)))
+
+(use-package lsp-ui
+  :ensure t
+  :custom
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-show-with-cursor t))
 
 ;; Snippets
 (use-package yasnippet
@@ -54,6 +63,10 @@
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode))
+
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode))
 
 ;; Web Programming
 (use-package web-mode
@@ -73,7 +86,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(company company-box evil-collection lsp-mode lsp-ui magit web-mode
+	     yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
