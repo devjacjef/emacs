@@ -45,6 +45,7 @@
   :ensure t
   :hook ((c-mode . lsp)
 	 (c++-mode . lsp)
+	 (php-mode . lsp)
 	 (web-mode . lsp)))
 
 (use-package lsp-ui
@@ -62,6 +63,9 @@
 ;; Auto Complete
 (use-package company
   :ensure t
+  :config
+  (setq company-idle-delay 0.1
+	company-minimum-prefix-length 1)
   :hook (after-init . global-company-mode))
 
 (use-package company-box
@@ -73,13 +77,20 @@
   :ensure t
   :mode
   (("\\.phtml\\'" . web-mode)
-   ("\\.php\\'" . web-mode)
    ("\\.tpl\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
    ("\\.as[cp]x\\'" . web-mode)
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
-   ("\\.djhtml\\'" . web-mode)))
+   ("\\.djhtml\\'" . web-mode))
+  :hook (web-mode . lsp))
+
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -87,8 +98,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company company-box evil-collection lsp-mode lsp-ui magit web-mode
-	     yasnippet)))
+   '(which-key php-mode projectile company company-box evil-collection lsp-mode lsp-ui magit web-mode yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
