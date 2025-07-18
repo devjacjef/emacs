@@ -90,7 +90,7 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
+             ("C-c p" . projectile-command-map)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
