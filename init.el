@@ -90,7 +90,19 @@
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-             ("C-c p" . projectile-command-map)))
+              ("C-c p" . projectile-command-map)))
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-center-content t)
+  (setq dashboard-items '((recents   . 5)
+                        (bookmarks . 5)
+                        (projects  . 5)
+                        (agenda    . 5)
+                        (registers . 5)))
+  (setq dashboard-projects-backend 'projectile))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -98,7 +110,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(which-key php-mode projectile company company-box evil-collection lsp-mode lsp-ui magit web-mode yasnippet)))
+   '(company-box dashboard evil-collection lsp-ui magit projectile
+		 web-mode yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
