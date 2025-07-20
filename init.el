@@ -19,7 +19,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-;; TODO: Break this into multiple files later...
+;; TODO: Split into multiple files..
 
 ;; Vim Bindings
 (use-package evil
@@ -37,6 +37,7 @@
   (evil-collection-init))
 
 (use-package magit
+  :ensure t
   :bind (("C-x g" . magit-status)
          ("C-x C-g" . magit-status)))
 
@@ -64,8 +65,10 @@
 (use-package company
   :ensure t
   :config
-  (setq company-idle-delay 0.1
-	company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.2
+	company-minimum-prefix-length 2
+	company-tooltip-limit 8
+	company-dabbrev-downcase 0)
   :hook (after-init . global-company-mode))
 
 (use-package company-box
@@ -104,14 +107,36 @@
                         (registers . 5)))
   (setq dashboard-projects-backend 'projectile))
 
+;; TODO, make more use of treemacs
+(use-package treemacs
+  :ensure t
+  :defer t
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("51fa6edfd6c8a4defc2681e4c438caf24908854c12ea12a1fbfd4d055a9647a3"
+     "d5fd482fcb0fe42e849caba275a01d4925e422963d1cd165565b31d3f4189c87"
+     default))
  '(package-selected-packages
-   '(company-box dashboard evil-collection lsp-ui magit projectile
-		 web-mode yasnippet)))
+   '(company-box dashboard evil-collection gruvbox-theme lsp-ui magit
+		 projectile treemacs treemacs-evil web-mode yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
