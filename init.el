@@ -1,9 +1,3 @@
-;; Getting rid of extra UI elements
-(setq inhibit-splash-screen t)
-(customize-set-variable 'scroll-bar-mode nil)
-(customize-set-variable 'tool-bar-mode nil)
-(customize-set-variable 'menu-bar-mode nil)
-
 ;; Allow hash to be entered  
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 
@@ -15,9 +9,18 @@
 
 ;; Enabling MELPA
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+	("melpa-stable" . "https://stable.melpa.org/packages/")))
+
 (package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 ;; TODO: Split into multiple files..
 
