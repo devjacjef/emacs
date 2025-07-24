@@ -22,6 +22,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+; Loading external files
 (load-file (expand-file-name "comp.el" user-emacs-directory))
 (load-file (expand-file-name "evil.el" user-emacs-directory))
 (load-file (expand-file-name "tools.el" user-emacs-directory))
