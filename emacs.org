@@ -1,0 +1,69 @@
+#+title: Jack's Emacs Config
+#+author: Jack Jefferson
+
+* Packages
+
+Below is the setup for using packages in GNU Emacs. Following the setup are all the packages I have chosen to use for emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+#+END_SRC
+
+** Which Key
+
+I keep forgetting which key I need to press.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :config
+    (which-key-mode))
+#+END_SRC
+
+** Evil
+
+/I'm fucking evil./
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :config
+    (evil-mode))
+#+END_SRC
+
+** Completion
+
+*** Corfu
+
+#+BEGIN_SRC emacs-lisp
+  (use-package corfu
+    :ensure t
+    :config
+    (global-corfu-mode)
+    (setq corfu-auto t))
+#+END_SRC
+
+*** Cape
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cape
+    :ensure t
+    :init
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+#+END_SRC
+
+** Eglot
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eglot
+    :ensure t
+    :hook (go-mode . eglot-ensure))
+#+END_SRC

@@ -1,0 +1,14 @@
+*~
+.emacs.desktop*
+eln-cache
+elpa
+eshell
+games
+ielm-history.*
+multisession
+network-security.data
+places
+projects
+tramp
+transient
+url
