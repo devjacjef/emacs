@@ -2,6 +2,7 @@
 #+author: Jack Jefferson
 
 * TODO Define a TODO list.
+* TODO Figure out what is going on with eldoc.
 
 * Packages
 
@@ -59,7 +60,6 @@ I keep forgetting which key I need to press.
     (add-hook 'completion-at-point-functions #'cape-dabbrev)
     (add-hook 'completion-at-point-functions #'cape-file)
     (add-hook 'completion-at-point-functions #'cape-elisp-block))
-
 #+END_SRC
 
 *** LSP Mode
