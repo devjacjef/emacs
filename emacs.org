@@ -1,6 +1,8 @@
 #+title: Jack's Emacs Config
 #+author: Jack Jefferson
 
+* TODO Define a TODO list.
+
 * Packages
 
 Below is the setup for using packages in GNU Emacs. Following the setup are all the packages I have chosen to use for emacs.
@@ -31,9 +33,9 @@ I keep forgetting which key I need to press.
 /I'm fucking evil./
 
 #+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :config
-    (evil-mode))
+    (use-package evil
+      :config
+      (evil-mode))
 #+END_SRC
 
 ** Completion
@@ -60,10 +62,25 @@ I keep forgetting which key I need to press.
 
 #+END_SRC
 
-** Eglot
+*** LSP Mode
+
+In =:config= I set =lsp-eldoc-render-all= to render all the information the LSP gives us and just to be explicit I enable =lsp-eldoc-enable-hover=.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package eglot
+  (use-package lsp-mode
     :ensure t
-    :hook (go-mode . eglot-ensure))
+    :hook (
+	 (go-mode . lsp)) ;; Enable LSP for Go. Tends to be buggy...
+    :config 
+	   (setq lsp-eldoc-render-all t)
+	   (setq lsp-eldoc-enable-hover t))
+#+END_SRC
+
+** Eldoc
+
+When using =lsp-mode=, enable =eldoc-box-hover-at-point-mode= to allow for docs when hovering a function.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eldoc-box
+    :hook (lsp-mode . eldoc-box-hover-at-point-mode))
 #+END_SRC

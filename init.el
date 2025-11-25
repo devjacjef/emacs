@@ -3,12 +3,14 @@
   (expand-file-name "emacs.org"
                     user-emacs-directory))
 
+(global-eldoc-mode 1)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(cape corfu evil go-mode lsp-ui)))
+ '(package-selected-packages '(cape corfu eldoc-box evil go-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
