@@ -18,4 +18,4 @@
 ;; tweak native compilation settings
 (setq native-comp-speed 2)
 
-(setq warning-minimum-level :emergency)
+(setq byte-compile-warnings '(not docstrings) )

@@ -1,86 +1,186 @@
-#+title: Jack's Emacs Config
+#+title: devjacjef's Emacs Config
 #+author: Jack Jefferson
 
-* TODO Define a TODO list.
-* TODO Figure out what is going on with eldoc.
+* About
 
-* Packages
+This is is my Emac's configuration primarily used for coding and writing. Each section /should/ contain a sub-heading for references as to where I sourced my information. This may prove useful to others looking to solve issues they face or be useful to me when I need to reference /things/.
+I use Emac's when writing code both at work and at home and occassionally switch to other editors such as PHPStorm, Helix and Neovim. I find Emac's to be a good middle ground of powerful IDE features and simple editing.
 
-Below is the setup for using packages in GNU Emacs. Following the setup are all the packages I have chosen to use for emacs.
+* Config Tasks
+
+/Tasks I am still yet to get round to./
+
+** TODO Setup Completion
+
+*** TODO Setup LSP Support
+
+*** TODO Setup Minor Modes for Languages
+
+**** TODO Go
+
+**** TODO PHP
+
+**** TODO Java
+
+**** TODO Rust
+
+**** TODO C/C++
+
+** TODO Setup a Nice Theme
+
+** TODO Setup Support for Docker
+
+** TODO Setup Support for Git
+
+** TODO Further Setup Evil
+
+* Package Configuration
+
+Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
+I am aiming to have something fully feature, like that of an IDE.
+
+* Setting up Package Archives
+
+** References
+
+- [[https://chrismaiorana.com/emacs-guides/installing-packages/][Installing Packages and using them | Chris Maiorana]]
+
+** Source
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  ;; Adding Package Archives
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+  			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+  			 ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  ;; Init Packages
   (package-initialize)
 
+  (unless package-archive-contents
+    ;; Check for package updates
+    (package-refresh-contents))
+  ;; If package is not installed, install it
   (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
     (package-install 'use-package))
+  ;; If 'use-package' is not loaded, load it
+  (require 'use-package)
+  ;; Always ensure a package is downloaded (avoids having to write ':ensure t' every time)
+  (setq use-package-always-ensure t)
 #+END_SRC
 
-** Which Key
+* Which Key
 
 I keep forgetting which key I need to press.
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-    :config
+    :init
     (which-key-mode))
 #+END_SRC
 
-** Evil
+* Evil
 
-/I'm fucking evil./
+I am more comfortable with vim bindings. They make working a lot faster.
 
 #+BEGIN_SRC emacs-lisp
     (use-package evil
-      :config
+      :init
       (evil-mode))
 #+END_SRC
 
-** Completion
+* LSP-Mode
 
-*** Corfu
+I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package corfu
-    :ensure t
-    :config
-    (global-corfu-mode)
-    (setq corfu-auto t))
-#+END_SRC
+** References
 
-*** Cape
-
-#+BEGIN_SRC emacs-lisp
-  (use-package cape
-    :ensure t
-    :init
-    (add-hook 'completion-at-point-functions #'cape-dabbrev)
-    (add-hook 'completion-at-point-functions #'cape-file)
-    (add-hook 'completion-at-point-functions #'cape-elisp-block))
-#+END_SRC
-
-*** LSP Mode
-
-In =:config= I set =lsp-eldoc-render-all= to render all the information the LSP gives us and just to be explicit I enable =lsp-eldoc-enable-hover=.
+- [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
+- [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
+  
+** Source
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
-    :ensure t
+    :init
+    (setq lsp-keymap-prefix "C-c l")
     :hook (
-	 (go-mode . lsp)) ;; Enable LSP for Go. Tends to be buggy...
-    :config 
-	   (setq lsp-eldoc-render-all t)
-	   (setq lsp-eldoc-enable-hover t))
+  	 (go-mode . lsp)
+  	 (lsp-mode . lsp-enable-which-key-integration))
+    :config
+    (setq lsp-completion-provider :none)
+    :commands lsp)
 #+END_SRC
 
-** Eldoc
+* Completion at Point
 
-When using =lsp-mode=, enable =eldoc-box-hover-at-point-mode= to allow for docs when hovering a function.
+This is quite an interesting topic I think. There's a lot of history as to how this is handled and I'm still quite new to it.
+
+For my config, I am going to go with =corfu= as it seeems to be a lighter-weight solution and all I really require right now is something that let me save a few keystrokes when working.
+
+** References
+
+- [[https://utcc.utoronto.ca/~cks/space/blog/programming/EmacsUnderstandingCompletion][My understanding of various sorts of completion in GNU Emacs | Chris Siebenmann]]
+- [[https://kristofferbalintona.me/posts/202202270056/][Corfu, Kind-icon, and Corfu-doc | Kristoffer Balintona]]
+- [[https://github.com/minad/corfu][corfu.el - COmpletion in Region FUnction]]
+- 
+** Source
 
 #+BEGIN_SRC emacs-lisp
-  (use-package eldoc-box
-    :hook (lsp-mode . eldoc-box-hover-at-point-mode))
+  (use-package corfu
+    :defer t
+    ;; TAB-and-Go customizations
+    :custom
+    (corfu-cycle t)           ;; Enable cycling for `corfu-next/previous'
+    (corfu-preselect 'prompt) ;; Always preselect the prompt
+    (corfu-auto          t)
+    (corfu-auto-delay    0.1)
+    (corfu-auto-prefix   1)
+    (corfu-cycle         t)
+    (corfu-quit-no-match 'separator)
+    ;; Use TAB for cycling, default is `corfu-complete'.
+    :bind
+    (:map corfu-map
+          ("TAB" . corfu-next)
+          ([tab] . corfu-next)
+          ("S-TAB" . corfu-previous)
+          ([backtab] . corfu-previous))
+
+    :init
+    (global-corfu-mode))
+
+  ;; Add extensions
+  (use-package cape
+    ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+    ;; Press C-c p ? to for help.
+    :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+    ;; Alternatively bind Cape commands individually.
+    ;; :bind (("C-c p d" . cape-dabbrev)
+    ;;        ("C-c p h" . cape-history)
+    ;;        ("C-c p f" . cape-file)
+    ;;        ...)
+    :init
+    ;; Add to the global default value of `completion-at-point-functions' which is
+    ;; used by `completion-at-point'.  The order of the functions matters, the
+    ;; first function returning a result wins.  Note that the list of buffer-local
+    ;; completion functions takes precedence over the global list.
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block)
+    ;; (add-hook 'completion-at-point-functions #'cape-history)
+  )
 #+END_SRC
+
+* Snippets
+
+** References
+
+- [[https://blog.nshephard.dev/posts/emacs-yasnippet/][Emacs Yasnippet | Neil Shephard]]
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+      :init
+      (yas-global-mode))
+
+    (use-package yasnippet-snippets)
+  #+END_SRC
