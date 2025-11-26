@@ -6,34 +6,6 @@
 This is is my Emac's configuration primarily used for coding and writing. Each section /should/ contain a sub-heading for references as to where I sourced my information. This may prove useful to others looking to solve issues they face or be useful to me when I need to reference /things/.
 I use Emac's when writing code both at work and at home and occassionally switch to other editors such as PHPStorm, Helix and Neovim. I find Emac's to be a good middle ground of powerful IDE features and simple editing.
 
-* Config Tasks
-
-/Tasks I am still yet to get round to./
-
-** TODO Setup Completion
-
-*** TODO Setup LSP Support
-
-*** TODO Setup Minor Modes for Languages
-
-**** TODO Go
-
-**** TODO PHP
-
-**** TODO Java
-
-**** TODO Rust
-
-**** TODO C/C++
-
-** TODO Setup a Nice Theme
-
-** TODO Setup Support for Docker
-
-** TODO Setup Support for Git
-
-** TODO Further Setup Evil
-
 * Package Configuration
 
 Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
