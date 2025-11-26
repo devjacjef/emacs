@@ -3,6 +3,10 @@
  (expand-file-name "emacs.org"
 		   user-emacs-directory))
 
+;; (set-face-attribute 'default nil
+  ;; :family "FixedSys"
+  ;; :height 160)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
