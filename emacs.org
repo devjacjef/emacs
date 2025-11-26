@@ -83,10 +83,24 @@ I keep forgetting which key I need to press.
 
 I am more comfortable with vim bindings. They make working a lot faster.
 
+** References
+
+- [[https://github.com/emacs-evil/evil-collection][Evil Collection]]
+
+** Source
+
 #+BEGIN_SRC emacs-lisp
-    (use-package evil
-      :init
-      (evil-mode))
+  (use-package evil
+    :init
+    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
 #+END_SRC
 
 * LSP-Mode
@@ -149,6 +163,16 @@ For my config, I am going to go with =corfu= as it seeems to be a lighter-weight
     :init
     (global-corfu-mode))
 
+  ;; Nice icons for corfu
+  (use-package kind-icon
+    :ensure t
+    :after corfu
+    ;:custom
+    ; (kind-icon-blend-background t)
+    ; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
   ;; Add extensions
   (use-package cape
     ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
@@ -173,9 +197,13 @@ For my config, I am going to go with =corfu= as it seeems to be a lighter-weight
 
 * Snippets
 
+Snippets are really handy to have.
+
 ** References
 
 - [[https://blog.nshephard.dev/posts/emacs-yasnippet/][Emacs Yasnippet | Neil Shephard]]
+
+** Source
 
   #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
@@ -184,3 +212,20 @@ For my config, I am going to go with =corfu= as it seeems to be a lighter-weight
 
     (use-package yasnippet-snippets)
   #+END_SRC
+
+* Magit
+
+I've used magit a lot and it's one of the nicest tools I have used in Emacs.
+
+** References
+
+- [[https://menno.io/posts/use-package/][Better Emacs Config: use-package | Menno Finlay-Smits]]
+
+** Source
+
+#+BEGIN_SRC emacs-lisp
+    (use-package magit
+      :bind ("C-c g" . magit-status))
+#+END_SRC
+
+   
