@@ -1,5 +1,8 @@
 *~
 .emacs.desktop*
+.cache
+.lsp-session-v1
+emacs.el
 eln-cache
 elpa
 eshell
