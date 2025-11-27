@@ -3,10 +3,6 @@
  (expand-file-name "emacs.org"
 		   user-emacs-directory))
 
-;; (set-face-attribute 'default nil
-  ;; :family "FixedSys"
-  ;; :height 160)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -16,8 +12,8 @@
    '("d5fd482fcb0fe42e849caba275a01d4925e422963d1cd165565b31d3f4189c87"
      default))
  '(package-selected-packages
-   '(cape corfu evil evil-collection go-mode gruvbox-theme kind-icon
-	  lsp-mode magit yasnippet-snippets)))
+   '(cape corfu evil-collection kind-icon lsp-mode magit olivetti
+	  org-appear org-fragtog org-superstar yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

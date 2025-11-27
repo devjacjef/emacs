@@ -30,13 +30,13 @@ This is just some general Emacs configuration.
 Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
 I am aiming to have something fully feature, like that of an IDE.
 
-* Setting up Package Archives
+** Setting up Package Archives
 
-** References
+*** References
 
 - [[https://chrismaiorana.com/emacs-guides/installing-packages/][Installing Packages and using them | Chris Maiorana]]
 
-** Source
+*** Source
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -60,7 +60,7 @@ I am aiming to have something fully feature, like that of an IDE.
   (setq use-package-always-ensure t)
 #+END_SRC
 
-* Which Key
+** Which Key
 
 I keep forgetting which key I need to press.
 
@@ -70,15 +70,15 @@ I keep forgetting which key I need to press.
     (which-key-mode))
 #+END_SRC
 
-* Evil
+** Evil
 
 I am more comfortable with vim bindings. They make working a lot faster.
 
-** References
+*** References
 
 - [[https://github.com/emacs-evil/evil-collection][Evil Collection]]
 
-** Source
+*** Source
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
@@ -94,16 +94,16 @@ I am more comfortable with vim bindings. They make working a lot faster.
     (evil-collection-init))
 #+END_SRC
 
-* LSP-Mode
+** LSP-Mode
 
 I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
 
-** References
+*** References
 
 - [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
 - [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
   
-** Source
+*** Source
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
@@ -117,19 +117,19 @@ I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. Whi
     :commands lsp)
 #+END_SRC
 
-* Completion at Point
+** Completion at Point
 
 This is quite an interesting topic I think. There's a lot of history as to how this is handled and I'm still quite new to it.
 
 For my config, I am going to go with =corfu= as it seeems to be a lighter-weight solution and all I really require right now is something that let me save a few keystrokes when working.
 
-** References
+*** References
 
 - [[https://utcc.utoronto.ca/~cks/space/blog/programming/EmacsUnderstandingCompletion][My understanding of various sorts of completion in GNU Emacs | Chris Siebenmann]]
 - [[https://kristofferbalintona.me/posts/202202270056/][Corfu, Kind-icon, and Corfu-doc | Kristoffer Balintona]]
 - [[https://github.com/minad/corfu][corfu.el - COmpletion in Region FUnction]]
 - 
-** Source
+*** Source
 
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
@@ -186,15 +186,15 @@ For my config, I am going to go with =corfu= as it seeems to be a lighter-weight
   )
 #+END_SRC
 
-* Snippets
+** Snippets
 
 Snippets are really handy to have.
 
-** References
+*** References
 
 - [[https://blog.nshephard.dev/posts/emacs-yasnippet/][Emacs Yasnippet | Neil Shephard]]
 
-** Source
+*** Source
 
   #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
@@ -204,19 +204,112 @@ Snippets are really handy to have.
     (use-package yasnippet-snippets)
   #+END_SRC
 
-* Magit
+** Magit
 
 I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 
-** References
+*** References
 
 - [[https://menno.io/posts/use-package/][Better Emacs Config: use-package | Menno Finlay-Smits]]
 
-** Source
+*** Source
 
 #+BEGIN_SRC emacs-lisp
     (use-package magit
       :bind ("C-c g" . magit-status))
 #+END_SRC
 
-   
+* Org Mode Configuration
+
+* References
+
+- [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
+
+* Source
+
+#+BEGIN_SRC emacs-lisp
+;; Sophie Bosio's Prettifying Org Mode
+
+;; Resize Org headings
+(dolist (face '((org-level-1 . 1.35)
+		(org-level-2 . 1.3)
+		(org-level-3 . 1.2)
+		(org-level-4 . 1.1)
+		(org-level-5 . 1.1)
+		(org-level-6 . 1.1)
+		(org-level-7 . 1.1)
+		(org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font "Menlo" :weight 'bold :height (cdr face)))
+
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font "Menlo" :weight
+		    'bold :height 1.8)
+
+(require 'org-indent)
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+
+(set-face-attribute 'org-block nil            :foreground nil :inherit
+		    'fixed-pitch :height 0.85)
+(set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
+(set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
+(set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
+(set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+							 fixed-pitch))
+(set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+
+(plist-put org-format-latex-options :scale 2)
+
+(setq org-adapt-indentation t
+      org-hide-leading-stars t
+      org-pretty-entities t
+      org-ellipsis "  ·")
+
+(setq org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
+
+
+(setq org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
+
+(use-package org-appear
+  :commands (org-appear-mode)
+  :hook     (org-mode . org-appear-mode)
+  :config
+  (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
+  (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
+        org-appear-autolinks      t   ; Show links
+	org-appear-autosubmarkers t)) ; Show sub- and superscripts
+
+(setq org-log-done                       t
+      org-auto-align-tags                t
+      org-tags-column                    -80
+      org-fold-catch-invisible-edits     'show-and-error
+      org-special-ctrl-a/e               t
+      org-insert-heading-respect-content t)
+
+(plist-put org-format-latex-options :scale 1.35)
+
+(use-package org-fragtog
+  :hook (org-mode-hook . org-fragtog-mode))
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+
+(add-hook 'org-mode-hook 'olivetti-mode)
+
+(use-package org-superstar
+  :config
+  (setq org-superstar-leading-bullet " ")
+  (setq org-superstar-headline-bullets-list '("◉" "○" "⚬" "◈" "◇"))
+  (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
+  (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
+                                          ("WAIT"  . 9744)
+                                          ("READ"  . 9744)
+                                          ("PROG"  . 9744)
+					  ("DONE"  . 9745)))
+  :hook (org-mode . org-superstar-mode))
+#+END_SRC
