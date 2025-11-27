@@ -134,7 +134,7 @@ For my config, I am going to go with =corfu= as it seeems to be a lighter-weight
 - [[https://utcc.utoronto.ca/~cks/space/blog/programming/EmacsUnderstandingCompletion][My understanding of various sorts of completion in GNU Emacs | Chris Siebenmann]]
 - [[https://kristofferbalintona.me/posts/202202270056/][Corfu, Kind-icon, and Corfu-doc | Kristoffer Balintona]]
 - [[https://github.com/minad/corfu][corfu.el - COmpletion in Region FUnction]]
-- 
+
 *** Source
 
 #+BEGIN_SRC emacs-lisp
@@ -358,7 +358,8 @@ I really like how this modeline has come out now. It's a lot more minimal.
   
 ** References
 
-[[https://github.com/SophieBosio/.emacs.d#custom-mode-line][Custom Mode Line | Sophie Bosio]]
+- [[https://github.com/SophieBosio/.emacs.d#custom-mode-line][Custom Mode Line | Sophie Bosio]]
+- [[https://occasionallycogent.com/custom_emacs_modeline/index.html][Customizing the Emacs Modeline | James Norman Vladimir Cash]]
    
 ** Source
    
