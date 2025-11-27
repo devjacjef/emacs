@@ -225,6 +225,16 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
       :bind ("C-c g" . magit-status))
 #+END_SRC
 
+** Tools for reading documents
+
+   Being able to read pdf and epub files in Emacs is really helpful especially when wanting to study and keep focused on note-taking.
+
+*** TODO Add pdftools and nov.el
+
+*** References
+
+*** Source
+
 * Org Mode Configuration
 
 I like this idea of making org-mode look nice. I find it quite hard to read my own configuration if everything is indented to the left.
