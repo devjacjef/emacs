@@ -6,6 +6,20 @@
 This is is my Emac's configuration primarily used for coding and writing. Each section /should/ contain a sub-heading for references as to where I sourced my information. This may prove useful to others looking to solve issues they face or be useful to me when I need to reference /things/.
 I use Emac's when writing code both at work and at home and occassionally switch to other editors such as PHPStorm, Helix and Neovim. I find Emac's to be a good middle ground of powerful IDE features and simple editing.
 
+* Setup
+
+  If you would like to try this setup for yourself, you can do so with the following example:
+
+  #+BEGIN_SRC bash
+  # If you use .emacs.d as your config
+  git clone https://github.com/devjacjef/emacs .emacs.d
+
+  # If you use .config/emacs
+  git clone https://github.com/devjacjef/emacs .config/emacs
+
+  # Afterwards, just open Emacs and it will install
+  #+END_SRC
+
 * Emacs Configuration
 
 This is just some general Emacs configuration.
@@ -234,7 +248,7 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 *** References
 
 *** Source
-
+    
 * Org Mode Configuration
 
 I like this idea of making org-mode look nice. I find it quite hard to read my own configuration if everything is indented to the left.
