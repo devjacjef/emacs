@@ -81,17 +81,23 @@ I am more comfortable with vim bindings. They make working a lot faster.
 *** Source
 
 #+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :init
-    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-    (setq evil-want-keybinding nil)
-    :config
-    (evil-mode 1))
+(use-package evil
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (evil-mode)
+  :config
+  (setq evil-echo-state nil
+	evil-normal-state-tag "NORMAL"
+	evil-insert-state-tag "INSERT"
+	evil-visual-state-tag "VISUAL"
+	evil-replace-state-tag "REPLACE"
+	evil-operator-state-tag "OPERATOR"))
 
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 #+END_SRC
 
 ** LSP-Mode
