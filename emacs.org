@@ -17,12 +17,12 @@ This is just some general Emacs configuration.
 ** Source
 
 #+BEGIN_SRC emacs-lisp
-    ;; Pairs
-    (electric-pair-mode)
+;; Pairs
+(electric-pair-mode)
 
-    ;; Set font if exists
-    (when (member "Fixedsys" (font-family-list))
-      (set-face-attribute 'default nil :family "FixedSys" :height 160))
+;; Set font if exists
+(when (member "Fixedsys" (font-family-list))
+  (set-face-attribute 'default nil :family "FixedSys" :height 160))
 #+END_SRC
 
 * Package Configuration
@@ -56,7 +56,7 @@ I am aiming to have something fully feature, like that of an IDE.
     (package-install 'use-package))
   ;; If 'use-package' is not loaded, load it
   (require 'use-package)
-  ;; Always ensure a package is downloaded (avoids having to write ':ensure t' every time)
+  ;; avoids having to write ':ensure t' every time
   (setq use-package-always-ensure t)
 #+END_SRC
 
@@ -221,9 +221,17 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 
 * Org Mode Configuration
 
+I like this idea of making org-mode look nice. I find it quite hard to read my own configuration if everything is indented to the left.
+
+There are a view things I would like to tidy up but those can be worked on later when I have a better understanding of /e-lisp/ but for the time being, I quite enjoy this little config.
+
+** TODO Implement solution for grouping hooks together.
+  
 * References
 
 - [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
+- [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs | Diego Zamboni]]
+- [[https://emacs.stackexchange.com/a/503][How do I "group hooks"? | Solution by Jonathan Leech-Pepin]]
 
 * Source
 
@@ -239,17 +247,16 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 		(org-level-6 . 1.1)
 		(org-level-7 . 1.1)
 		(org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "Menlo" :weight 'bold :height (cdr face)))
+  (set-face-attribute (car face) nil :font "Fixedsys" :weight 'bold :height (cdr face)))
 
 ;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font "Menlo" :weight
+(set-face-attribute 'org-document-title nil :font "Fixedsys" :weight
 		    'bold :height 1.8)
 
 (require 'org-indent)
 (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-(set-face-attribute 'org-block nil            :foreground nil :inherit
-		    'fixed-pitch :height 0.85)
+(set-face-attribute 'org-block nil            :foreground nil :height 0.85)
 (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
 (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
 (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
@@ -257,6 +264,11 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 							 fixed-pitch))
 (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+
+(custom-theme-set-faces
+ 'user
+ '(variable-pitch ((t (:family "Fixedsys" :height 180 :weight thin))))
+ '(fixed-pitch ((t ( :family "Fixedsys" :height 160)))))
 
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
@@ -297,6 +309,7 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 (use-package org-fragtog
   :hook (org-mode-hook . org-fragtog-mode))
 
+;; Soft word wrapping
 (add-hook 'org-mode-hook 'visual-line-mode)
 
 (add-hook 'org-mode-hook 'olivetti-mode)
