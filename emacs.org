@@ -92,7 +92,7 @@ I am more comfortable with vim bindings. They make working a lot faster.
 	evil-insert-state-tag "INSERT"
 	evil-visual-state-tag "VISUAL"
 	evil-replace-state-tag "REPLACE"
-	evil-operator-state-tag "OPERATOR"))
+	evil-operator-state-tag "OPERATE"))
 
 (use-package evil-collection
   :after evil
@@ -328,14 +328,16 @@ There are a view things I would like to tidy up but those can be worked on later
 ;; Soft word wrapping
 (add-hook 'org-mode-hook 'visual-line-mode)
 
-(add-hook 'org-mode-hook 'olivetti-mode)
+(use-package olivetti
+  :config
+  (setq olivetti-body-width 80)
+  :hook (org-mode-hook . olivetti-mode) )
 
 (setq org-todo-keywords
       '((sequence
 		 "TODO(t)" "WAIT(w)" "READ(r)" "PROG(p)" ; Needs further action
 		 "|"
 		 "DONE(d)")))                            ; Needs no action currently
-
 
 (use-package org-superstar
   :config
