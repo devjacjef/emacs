@@ -360,10 +360,10 @@
   		(org-level-6 . 1.1)
   		(org-level-7 . 1.1)
   		(org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Fixedsys" :weight 'bold :height (cdr face)))
+    (set-face-attribute (car face) nil :font "JetBrains Mono" :weight 'bold :height (cdr face)))
 
   ;; Make the document title a bit bigger
-  (set-face-attribute 'org-document-title nil :font "Fixedsys" :weight
+  (set-face-attribute 'org-document-title nil :font "JetBrains Mono" :weight
   		    'bold :height 1.8)
 
   (require 'org-indent)
@@ -379,9 +379,9 @@
   (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
   (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Fixedsys" :height 180 :weight thin))))
-   '(fixed-pitch ((t ( :family "Fixedsys" :height 160)))))
+   'gruvbox
+   '(variable-pitch ((t (:family "JetBrains Mono" :height 180 :weight thin))))
+   '(fixed-pitch ((t ( :family "JetBrains Mono" :height 160)))))
 
   (add-hook 'org-mode-hook 'variable-pitch-mode)
 
