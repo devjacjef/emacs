@@ -488,9 +488,6 @@
      					    (substring vc 5) 50)
      					   'face 'font-lock-comment-face))))
 
-     		(:eval (propertize " " 'display '(space :align-to (- right 15)))
-     		       'display-time-string)
-     		
      		;; Add space to align to the right
      		(:eval (propertize
      			" " 'display
