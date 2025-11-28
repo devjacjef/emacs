@@ -31,12 +31,18 @@
 ** Source
 
    #+BEGIN_SRC emacs-lisp
+   ;; Load Theme
+   (load-theme 'gruvbox t)
+
    ;; Pairs
    (electric-pair-mode)
 
    ;; Set font if exists
-   (when (member "Fixedsys" (font-family-list))
-     (set-face-attribute 'default nil :family "FixedSys" :height 160))
+   (when (member "JetBrains Mono" (font-family-list))
+     
+     (set-face-attribute 'default t :font "JetBrains Mono")
+     (set-frame-font "JetBrains Mono" nil t))
+
    #+END_SRC
 
 * Package Configuration
@@ -106,7 +112,8 @@
     	evil-insert-state-tag "INSERT"
     	evil-visual-state-tag "VISUAL"
     	evil-replace-state-tag "REPLACE"
-    	evil-operator-state-tag "OPERATE"))
+    	evil-operator-state-tag "OPERATE"
+    	evil-emacs-state-tag "EMACS"))
 
     (use-package evil-collection
       :after evil
