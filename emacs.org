@@ -145,6 +145,7 @@
 
     - [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
     - [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
+    - [[https://github.com/emacs-lsp/lsp-mode/issues/3577][Eager macro-expansion failure in lsp-terraform.el]]
 
 *** Source
 
@@ -154,9 +155,12 @@
       (setq lsp-keymap-prefix "C-c l")
       :hook (
     	 (go-mode . lsp)
+    	 (php-mode . lsp)
     	 (lsp-mode . lsp-enable-which-key-integration))
       :config
       (setq lsp-completion-provider :none)
+      ;; Fix for a weird bug
+      (delete 'lsp-terraform lsp-client-packages)
       :commands lsp)
     #+END_SRC
 
