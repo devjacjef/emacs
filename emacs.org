@@ -3,8 +3,8 @@
 
 * About
 
-This is is my Emac's configuration primarily used for coding and writing. Each section /should/ contain a sub-heading for references as to where I sourced my information. This may prove useful to others looking to solve issues they face or be useful to me when I need to reference /things/.
-I use Emac's when writing code both at work and at home and occassionally switch to other editors such as PHPStorm, Helix and Neovim. I find Emac's to be a good middle ground of powerful IDE features and simple editing.
+  This is is my Emac's configuration primarily used for coding and writing. Each section /should/ contain a sub-heading for references as to where I sourced my information. This may prove useful to others looking to solve issues they face or be useful to me when I need to reference /things/.
+  I use Emac's when writing code both at work and at home and occassionally switch to other editors such as PHPStorm, Helix and Neovim. I find Emac's to be a good middle ground of powerful IDE features and simple editing.
 
 * Setup
 
@@ -22,222 +22,239 @@ I use Emac's when writing code both at work and at home and occassionally switch
 
 * Emacs Configuration
 
-This is just some general Emacs configuration.
+  This is just some general Emacs configuration.
 
 ** Reference
 
-- [[https://sophiebos.io/posts/first-emacs-config/][Building Your First Emacs Config | Sophie Bosio]]
+   - [[https://sophiebos.io/posts/first-emacs-config/][Building Your First Emacs Config | Sophie Bosio]]
 
 ** Source
 
-#+BEGIN_SRC emacs-lisp
-;; Pairs
-(electric-pair-mode)
+   #+BEGIN_SRC emacs-lisp
+   ;; Pairs
+   (electric-pair-mode)
 
-;; Set font if exists
-(when (member "Fixedsys" (font-family-list))
-  (set-face-attribute 'default nil :family "FixedSys" :height 160))
-#+END_SRC
+   ;; Set font if exists
+   (when (member "Fixedsys" (font-family-list))
+     (set-face-attribute 'default nil :family "FixedSys" :height 160))
+   #+END_SRC
 
 * Package Configuration
 
-Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
-I am aiming to have something fully feature, like that of an IDE.
+  Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
+  I am aiming to have something fully feature, like that of an IDE.
 
 ** Setting up Package Archives
 
 *** References
 
-- [[https://chrismaiorana.com/emacs-guides/installing-packages/][Installing Packages and using them | Chris Maiorana]]
+    - [[https://chrismaiorana.com/emacs-guides/installing-packages/][Installing Packages and using them | Chris Maiorana]]
 
 *** Source
 
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-  ;; Adding Package Archives
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-  			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-  			 ("elpa" . "https://elpa.gnu.org/packages/")))
+    #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    ;; Adding Package Archives
+    (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+    			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+    			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
-  ;; Init Packages
-  (package-initialize)
+    ;; Init Packages
+    (package-initialize)
 
-  (unless package-archive-contents
-    ;; Check for package updates
-    (package-refresh-contents))
-  ;; If package is not installed, install it
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  ;; If 'use-package' is not loaded, load it
-  (require 'use-package)
-  ;; avoids having to write ':ensure t' every time
-  (setq use-package-always-ensure t)
-#+END_SRC
+    (unless package-archive-contents
+      ;; Check for package updates
+      (package-refresh-contents))
+    ;; If package is not installed, install it
+    (unless (package-installed-p 'use-package)
+      (package-install 'use-package))
+    ;; If 'use-package' is not loaded, load it
+    (require 'use-package)
+    ;; avoids having to write ':ensure t' every time
+    (setq use-package-always-ensure t)
+    #+END_SRC
 
 ** Which Key
 
-I keep forgetting which key I need to press.
+   I keep forgetting which key I need to press.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :init
-    (which-key-mode))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (use-package which-key
+     :init
+     (which-key-mode))
+   #+END_SRC
 
 ** Evil
 
-I am more comfortable with vim bindings. They make working a lot faster.
+   I am more comfortable with vim bindings. They make working a lot faster.
 
 *** References
 
-- [[https://github.com/emacs-evil/evil-collection][Evil Collection]]
+    - [[https://github.com/emacs-evil/evil-collection][Evil Collection]]
 
 *** Source
 
-#+BEGIN_SRC emacs-lisp
-(use-package evil
-  :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (evil-mode)
-  :config
-  (setq evil-echo-state nil
-	evil-normal-state-tag "NORMAL"
-	evil-insert-state-tag "INSERT"
-	evil-visual-state-tag "VISUAL"
-	evil-replace-state-tag "REPLACE"
-	evil-operator-state-tag "OPERATE"))
+    #+BEGIN_SRC emacs-lisp
+    (use-package evil
+      :init
+      (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+      (setq evil-want-keybinding nil)
+      (evil-mode)
+      :config
+      (setq evil-echo-state nil
+    	evil-normal-state-tag "NORMAL"
+    	evil-insert-state-tag "INSERT"
+    	evil-visual-state-tag "VISUAL"
+    	evil-replace-state-tag "REPLACE"
+    	evil-operator-state-tag "OPERATE"))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-#+END_SRC
+    (use-package evil-collection
+      :after evil
+      :config
+      (evil-collection-init))
+    #+END_SRC
 
 ** LSP-Mode
 
-I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
+   I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
 
 *** References
 
-- [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
-- [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
-  
+    - [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
+    - [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
+
 *** Source
 
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :hook (
-  	 (go-mode . lsp)
-  	 (lsp-mode . lsp-enable-which-key-integration))
-    :config
-    (setq lsp-completion-provider :none)
-    :commands lsp)
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+    (use-package lsp-mode
+      :init
+      (setq lsp-keymap-prefix "C-c l")
+      :hook (
+    	 (go-mode . lsp)
+    	 (lsp-mode . lsp-enable-which-key-integration))
+      :config
+      (setq lsp-completion-provider :none)
+      :commands lsp)
+    #+END_SRC
 
 ** Completion at Point
 
-This is quite an interesting topic I think. There's a lot of history as to how this is handled and I'm still quite new to it.
+   This is quite an interesting topic I think. There's a lot of history as to how this is handled and I'm still quite new to it.
 
-For my config, I am going to go with =corfu= as it seeems to be a lighter-weight solution and all I really require right now is something that let me save a few keystrokes when working.
+   For my config, I am going to go with =corfu= as it seeems to be a lighter-weight solution and all I really require right now is something that let me save a few keystrokes when working.
 
 *** References
 
-- [[https://utcc.utoronto.ca/~cks/space/blog/programming/EmacsUnderstandingCompletion][My understanding of various sorts of completion in GNU Emacs | Chris Siebenmann]]
-- [[https://kristofferbalintona.me/posts/202202270056/][Corfu, Kind-icon, and Corfu-doc | Kristoffer Balintona]]
-- [[https://github.com/minad/corfu][corfu.el - COmpletion in Region FUnction]]
+    - [[https://utcc.utoronto.ca/~cks/space/blog/programming/EmacsUnderstandingCompletion][My understanding of various sorts of completion in GNU Emacs | Chris Siebenmann]]
+    - [[https://kristofferbalintona.me/posts/202202270056/][Corfu, Kind-icon, and Corfu-doc | Kristoffer Balintona]]
+    - [[https://github.com/minad/corfu][corfu.el - COmpletion in Region FUnction]]
 
 *** Source
 
-#+BEGIN_SRC emacs-lisp
-  (use-package corfu
-    :defer t
-    ;; TAB-and-Go customizations
-    :custom
-    (corfu-cycle t)           ;; Enable cycling for `corfu-next/previous'
-    (corfu-preselect 'prompt) ;; Always preselect the prompt
-    (corfu-auto          t)
-    (corfu-auto-delay    0.1)
-    (corfu-auto-prefix   1)
-    (corfu-cycle         t)
-    (corfu-quit-no-match 'separator)
-    ;; Use TAB for cycling, default is `corfu-complete'.
-    :bind
-    (:map corfu-map
-          ("TAB" . corfu-next)
-          ([tab] . corfu-next)
-          ("S-TAB" . corfu-previous)
-          ([backtab] . corfu-previous))
+    #+BEGIN_SRC emacs-lisp
+    (use-package corfu
+      :defer t
+      ;; TAB-and-Go customizations
+      :custom
+      (corfu-cycle t)           ;; Enable cycling for `corfu-next/previous'
+      (corfu-preselect 'prompt) ;; Always preselect the prompt
+      (corfu-auto          t)
+      (corfu-auto-delay    0.1)
+      (corfu-auto-prefix   1)
+      (corfu-cycle         t)
+      (corfu-quit-no-match 'separator)
+      ;; Use TAB for cycling, default is `corfu-complete'.
+      :bind
+      (:map corfu-map
+            ("TAB" . corfu-next)
+            ([tab] . corfu-next)
+            ("S-TAB" . corfu-previous)
+            ([backtab] . corfu-previous))
 
-    :init
-    (global-corfu-mode))
+      :init
+      (global-corfu-mode))
 
-  ;; Nice icons for corfu
-  (use-package kind-icon
-    :ensure t
-    :after corfu
-    ;:custom
-    ; (kind-icon-blend-background t)
-    ; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+    ;; Nice icons for corfu
+    (use-package kind-icon
+      :ensure t
+      :after corfu
+    					;:custom
+    					; (kind-icon-blend-background t)
+    					; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
+      :config
+      (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-  ;; Add extensions
-  (use-package cape
-    ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
-    ;; Press C-c p ? to for help.
-    :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
-    ;; Alternatively bind Cape commands individually.
-    ;; :bind (("C-c p d" . cape-dabbrev)
-    ;;        ("C-c p h" . cape-history)
-    ;;        ("C-c p f" . cape-file)
-    ;;        ...)
-    :init
-    ;; Add to the global default value of `completion-at-point-functions' which is
-    ;; used by `completion-at-point'.  The order of the functions matters, the
-    ;; first function returning a result wins.  Note that the list of buffer-local
-    ;; completion functions takes precedence over the global list.
-    (add-hook 'completion-at-point-functions #'cape-dabbrev)
-    (add-hook 'completion-at-point-functions #'cape-file)
-    (add-hook 'completion-at-point-functions #'cape-elisp-block)
-    ;; (add-hook 'completion-at-point-functions #'cape-history)
-  )
-#+END_SRC
+    ;; Add extensions
+    (use-package cape
+      ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+      ;; Press C-c p ? to for help.
+      :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+      ;; Alternatively bind Cape commands individually.
+      ;; :bind (("C-c p d" . cape-dabbrev)
+      ;;        ("C-c p h" . cape-history)
+      ;;        ("C-c p f" . cape-file)
+      ;;        ...)
+      :init
+      ;; Add to the global default value of `completion-at-point-functions' which is
+      ;; used by `completion-at-point'.  The order of the functions matters, the
+      ;; first function returning a result wins.  Note that the list of buffer-local
+      ;; completion functions takes precedence over the global list.
+      (add-hook 'completion-at-point-functions #'cape-dabbrev)
+      (add-hook 'completion-at-point-functions #'cape-file)
+      (add-hook 'completion-at-point-functions #'cape-elisp-block)
+      ;; (add-hook 'completion-at-point-functions #'cape-history)
+      )
+    #+END_SRC
 
 ** Snippets
 
-Snippets are really handy to have.
+   Snippets are really handy to have.
 
 *** References
 
-- [[https://blog.nshephard.dev/posts/emacs-yasnippet/][Emacs Yasnippet | Neil Shephard]]
+    - [[https://blog.nshephard.dev/posts/emacs-yasnippet/][Emacs Yasnippet | Neil Shephard]]
 
 *** Source
 
-  #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
       :init
       (yas-global-mode))
 
     (use-package yasnippet-snippets)
-  #+END_SRC
+    #+END_SRC
 
 ** Magit
 
-I've used magit a lot and it's one of the nicest tools I have used in Emacs.
+   I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 
 *** References
 
-- [[https://menno.io/posts/use-package/][Better Emacs Config: use-package | Menno Finlay-Smits]]
+    - [[https://menno.io/posts/use-package/][Better Emacs Config: use-package | Menno Finlay-Smits]]
 
 *** Source
 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
     (use-package magit
       :bind ("C-c g" . magit-status))
-#+END_SRC
+    #+END_SRC
+
+** Terminal Emulator
+
+*** References
+
+    - [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm]]
+
+*** Source
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package vterm
+      :config
+      (defun vterm-new ()
+        (interactive)
+        (vterm (generate-new-buffer "*vterm*")))
+      )
+    #+END_SRC
 
 ** Tools for reading documents
 
@@ -264,191 +281,191 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
     
 *** Source
 
-#+BEGIN_SRC emacs-lisp
-(use-package general
-  :config
-  (general-evil-setup t)
+    #+BEGIN_SRC emacs-lisp
+    (use-package general
+      :config
+      (general-evil-setup t)
 
-  (general-create-definer devjj/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC"))
-#+END_SRC
+      (general-create-definer devjj/keybinds
+        :keymaps '(normal insert visual emacs)
+        :prefix "SPC"
+        :global-prefix "C-SPC"))
+    #+END_SRC
     
 * Org Mode Configuration
 
-I like this idea of making org-mode look nice. I find it quite hard to read my own configuration if everything is indented to the left.
+  I like this idea of making org-mode look nice. I find it quite hard to read my own configuration if everything is indented to the left.
 
-There are a view things I would like to tidy up but those can be worked on later when I have a better understanding of /e-lisp/ but for the time being, I quite enjoy this little config.
+  There are a view things I would like to tidy up but those can be worked on later when I have a better understanding of /e-lisp/ but for the time being, I quite enjoy this little config.
 
 ** TODO Implement solution for grouping hooks together.
   
 * References
 
-- [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
-- [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs | Diego Zamboni]]
-- [[https://emacs.stackexchange.com/a/503][How do I "group hooks"? | Solution by Jonathan Leech-Pepin]]
+  - [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
+  - [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs | Diego Zamboni]]
+  - [[https://emacs.stackexchange.com/a/503][How do I "group hooks"? | Solution by Jonathan Leech-Pepin]]
 
 * Source
 
-#+BEGIN_SRC emacs-lisp
-;; Sophie Bosio's Prettifying Org Mode
+  #+BEGIN_SRC emacs-lisp
+  ;; Sophie Bosio's Prettifying Org Mode
 
-;; Resize Org headings
-(dolist (face '((org-level-1 . 1.35)
-		(org-level-2 . 1.3)
-		(org-level-3 . 1.2)
-		(org-level-4 . 1.1)
-		(org-level-5 . 1.1)
-		(org-level-6 . 1.1)
-		(org-level-7 . 1.1)
-		(org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "Fixedsys" :weight 'bold :height (cdr face)))
+  ;; Resize Org headings
+  (dolist (face '((org-level-1 . 1.35)
+  		(org-level-2 . 1.3)
+  		(org-level-3 . 1.2)
+  		(org-level-4 . 1.1)
+  		(org-level-5 . 1.1)
+  		(org-level-6 . 1.1)
+  		(org-level-7 . 1.1)
+  		(org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Fixedsys" :weight 'bold :height (cdr face)))
 
-;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font "Fixedsys" :weight
-		    'bold :height 1.8)
+  ;; Make the document title a bit bigger
+  (set-face-attribute 'org-document-title nil :font "Fixedsys" :weight
+  		    'bold :height 1.8)
 
-(require 'org-indent)
-(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  (require 'org-indent)
+  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-(set-face-attribute 'org-block nil            :foreground nil :height 0.85)
-(set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
-(set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
-(set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
-(set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
-							 fixed-pitch))
-(set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil            :foreground nil :height 0.85)
+  (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
+  (set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+  							 fixed-pitch))
+  (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "Fixedsys" :height 180 :weight thin))))
- '(fixed-pitch ((t ( :family "Fixedsys" :height 160)))))
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Fixedsys" :height 180 :weight thin))))
+   '(fixed-pitch ((t ( :family "Fixedsys" :height 160)))))
 
-(add-hook 'org-mode-hook 'variable-pitch-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-(plist-put org-format-latex-options :scale 2)
+  (plist-put org-format-latex-options :scale 2)
 
-(setq org-adapt-indentation t
-      org-hide-leading-stars t
-      org-pretty-entities t
-      org-ellipsis "  ·")
+  (setq org-adapt-indentation t
+        org-hide-leading-stars t
+        org-pretty-entities t
+        org-ellipsis "  ·")
 
-(setq org-src-fontify-natively t
-      org-src-tab-acts-natively t
-      org-edit-src-content-indentation 0)
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0)
 
 
-(setq org-src-fontify-natively t
-      org-src-tab-acts-natively t
-      org-edit-src-content-indentation 0)
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0)
 
-(use-package org-appear
-  :commands (org-appear-mode)
-  :hook     (org-mode . org-appear-mode)
-  :config
-  (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
-  (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
-        org-appear-autolinks      t   ; Show links
-	org-appear-autosubmarkers t)) ; Show sub- and superscripts
+  (use-package org-appear
+    :commands (org-appear-mode)
+    :hook     (org-mode . org-appear-mode)
+    :config
+    (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
+    (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
+          org-appear-autolinks      t   ; Show links
+  	org-appear-autosubmarkers t)) ; Show sub- and superscripts
 
-(setq org-log-done                       t
-      org-auto-align-tags                t
-      org-tags-column                    -80
-      org-fold-catch-invisible-edits     'show-and-error
-      org-special-ctrl-a/e               t
-      org-insert-heading-respect-content t)
+  (setq org-log-done                       t
+        org-auto-align-tags                t
+        org-tags-column                    -80
+        org-fold-catch-invisible-edits     'show-and-error
+        org-special-ctrl-a/e               t
+        org-insert-heading-respect-content t)
 
-(plist-put org-format-latex-options :scale 1.35)
+  (plist-put org-format-latex-options :scale 1.35)
 
-(use-package org-fragtog
-  :hook (org-mode-hook . org-fragtog-mode))
+  (use-package org-fragtog
+    :hook (org-mode-hook . org-fragtog-mode))
 
-;; Soft word wrapping
-(add-hook 'org-mode-hook 'visual-line-mode)
+  ;; Soft word wrapping
+  (add-hook 'org-mode-hook 'visual-line-mode)
 
-(use-package olivetti
-  :config
-  (setq olivetti-body-width 120)
-  :hook (org-mode-hook . olivetti-mode) )
+  (use-package olivetti
+    :config
+    (setq olivetti-body-width 120)
+    :hook (org-mode-hook . olivetti-mode) )
 
-(setq org-todo-keywords
-      '((sequence
-		 "TODO(t)" "WAIT(w)" "READ(r)" "PROG(p)" ; Needs further action
-		 "|"
-		 "DONE(d)")))                            ; Needs no action currently
+  (setq org-todo-keywords
+        '((sequence
+  	 "TODO(t)" "WAIT(w)" "READ(r)" "PROG(p)" ; Needs further action
+  	 "|"
+  	 "DONE(d)")))                            ; Needs no action currently
 
-(use-package org-superstar
-  :config
-  (setq org-superstar-leading-bullet " ")
-  (setq org-superstar-headline-bullets-list '("◉" "○" "⚬" "◈" "◇"))
-  (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
-  (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
-                                          ("WAIT"  . 9744)
-                                          ("READ"  . 9744)
-                                          ("PROG"  . 9744)
-					  ("DONE"  . 9745)))
-  :hook (org-mode . org-superstar-mode))
-#+END_SRC
+  (use-package org-superstar
+    :config
+    (setq org-superstar-leading-bullet " ")
+    (setq org-superstar-headline-bullets-list '("◉" "○" "⚬" "◈" "◇"))
+    (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
+    (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
+                                            ("WAIT"  . 9744)
+                                            ("READ"  . 9744)
+                                            ("PROG"  . 9744)
+  					  ("DONE"  . 9745)))
+    :hook (org-mode . org-superstar-mode))
+  #+END_SRC
 
 * Mode line
 
-Custom Mode Line. Borrowed some code from Sophie Bosio and figured out how to add the evil mode line tag. Set the tags earlier in the config.
+  Custom Mode Line. Borrowed some code from Sophie Bosio and figured out how to add the evil mode line tag. Set the tags earlier in the config.
 
-I really like how this modeline has come out now. It's a lot more minimal.
+  I really like how this modeline has come out now. It's a lot more minimal.
   
 ** References
 
-- [[https://github.com/SophieBosio/.emacs.d#custom-mode-line][Custom Mode Line | Sophie Bosio]]
-- [[https://occasionallycogent.com/custom_emacs_modeline/index.html][Customizing the Emacs Modeline | James Norman Vladimir Cash]]
-   
+   - [[https://github.com/SophieBosio/.emacs.d#custom-mode-line][Custom Mode Line | Sophie Bosio]]
+   - [[https://occasionallycogent.com/custom_emacs_modeline/index.html][Customizing the Emacs Modeline | James Norman Vladimir Cash]]
+
 ** Source
   
-  #+BEGIN_SRC emacs-lisp
-  (defvar lsp-modeline--code-actions-string nil)
+   #+BEGIN_SRC emacs-lisp
+   (defvar lsp-modeline--code-actions-string nil)
 
-  (setq-default mode-line-format
-    	      '("%e"
-    		(:propertize " " display (raise +0.4)) ;; Top padding
-    		(:propertize " " display (raise -0.4)) ;; Bottom padding
+   (setq-default mode-line-format
+     	      '("%e"
+     		(:propertize " " display (raise +0.4)) ;; Top padding
+     		(:propertize " " display (raise -0.4)) ;; Bottom padding
 
-    		
-    		(:propertize "λ  " face font-lock-comment-face)
-  		
-  		(:propertize (format "  %s  " evil-mode-line-tag)
-  			     'face 'mode-line)
-    		
-    		mode-line-frame-identification
-    		mode-line-buffer-identification
+     		
+     		(:propertize "λ  " face font-lock-comment-face)
+   		
+   		(:propertize (format "  %s  " evil-mode-line-tag)
+   			     'face 'mode-line)
+     		
+     		mode-line-frame-identification
+     		mode-line-buffer-identification
 
-    		;; Version control info
-    		(:eval (when-let (vc vc-mode)
-    			 ;; Use a pretty branch symbol in front of the branch name
-    			 (list (propertize "   " 'face 'font-lock-comment-face)
-    			       ;; Truncate branch name to 50 characters
-    			       (propertize (truncate-string-to-width
-    					    (substring vc 5) 50)
-    					   'face 'font-lock-comment-face))))
+     		;; Version control info
+     		(:eval (when-let (vc vc-mode)
+     			 ;; Use a pretty branch symbol in front of the branch name
+     			 (list (propertize "   " 'face 'font-lock-comment-face)
+     			       ;; Truncate branch name to 50 characters
+     			       (propertize (truncate-string-to-width
+     					    (substring vc 5) 50)
+     					   'face 'font-lock-comment-face))))
 
-    		(:eval (propertize " " 'display '(space :align-to (- right 15)))
-    		       'display-time-string)
-    		
-    		;; Add space to align to the right
-    		(:eval (propertize
-    			" " 'display
-    			`((space :align-to
-    				 (-  (+ right right-fringe right-margin)
-    				     ,(+ 3
-    					 (string-width (or lsp-modeline--code-actions-string ""))
-    					 (string-width "%4l:3%c")))))))
+     		(:eval (propertize " " 'display '(space :align-to (- right 15)))
+     		       'display-time-string)
+     		
+     		;; Add space to align to the right
+     		(:eval (propertize
+     			" " 'display
+     			`((space :align-to
+     				 (-  (+ right right-fringe right-margin)
+     				     ,(+ 3
+     					 (string-width (or lsp-modeline--code-actions-string ""))
+     					 (string-width "%4l:3%c")))))))
 
-    		;; LSP code actions
-    		(:eval (or lsp-modeline--code-actions-string ""))
-    		
-    		;; Line and column numbers
-    		(:propertize "%4l:%c" face mode-line-buffer-id)))
-  #+END_SRC
+     		;; LSP code actions
+     		(:eval (or lsp-modeline--code-actions-string ""))
+     		
+     		;; Line and column numbers
+     		(:propertize "%4l:%c" face mode-line-buffer-id)))
+   #+END_SRC
 
 * Keybinds
 
@@ -456,22 +473,27 @@ I really like how this modeline has come out now. It's a lot more minimal.
 
 ** TODO Find more keybinds for this.
   
-  #+BEGIN_SRC emacs-lisp
-    ;; File keybinds
-    (devjj/leader-keys
-      "f" '(:ignore t :which-key "File")
-      "ff" '(find-file :which-key "Find File")
-      "fs" '(save-file :which-key "File Save")
-      "fp" '(find-file-at-point :which-key "File at point"))
+   #+BEGIN_SRC emacs-lisp
+   ;; File keybinds
+   (devjj/keybinds
+     "f" '(:ignore t :which-key "File")
+     "ff" '(find-file :which-key "Find File")
+     "fs" '(save-file :which-key "File Save")
+     "fp" '(find-file-at-point :which-key "File at point"))
 
-    ;; Buffer keybinds
-    (devjj/leader-keys
-      "b" '(:ignore t :which-key "Buffer")
-      "bb" '(switch-to-buffer :which-key "Switch to buffer"))
+   ;; Buffer keybinds
+   (devjj/keybinds
+     "b" '(:ignore t :which-key "Buffer")
+     "bb" '(switch-to-buffer :which-key "Switch to buffer"))
 
-    ;; Quit keybinds
-    (devjj/leader-keys
-      "q" '(:ignore t :which-key "Quit")
-      "qq" '(save-buffers-kill-emacs :which-key "Quit Emacs")
-      "qQ" '(kill-emacs :which-key "Force Quit Emacs"))
-  #+END_SRC
+   ;; Quit keybinds
+   (devjj/keybinds
+     "q" '(:ignore t :which-key "Quit")
+     "qq" '(save-buffers-kill-emacs :which-key "Quit Emacs")
+     "qQ" '(kill-emacs :which-key "Force Quit Emacs"))
+
+   (devjj/keybinds
+     "o" '(:ignore t :which-key "Open")
+     "og" '(magit :which-key "Open Magit")
+     "ot" '(vterm :which-key "Open Vterm"))
+   #+END_SRC
