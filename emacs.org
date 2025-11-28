@@ -338,116 +338,140 @@
 
   There are a view things I would like to tidy up but those can be worked on later when I have a better understanding of /e-lisp/ but for the time being, I quite enjoy this little config.
 
-** TODO Implement solution for grouping hooks together.
-  
-* References
+** References
+   
+   - [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
+   - [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs | Diego Zamboni]]
+   - [[https://emacs.stackexchange.com/a/503][How do I "group hooks"? | Solution by Jonathan Leech-Pepin]]
+   - [[https://hugocisneros.com/org-config/#general-style][Org-mode configuration | Hugo Cisneros]]
 
-  - [[https://sophiebos.io/posts/prettifying-emacs-org-mode/][Prettifying Emacs Org Mode | Sophie Bosio]]
-  - [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Beautifying Org Mode in Emacs | Diego Zamboni]]
-  - [[https://emacs.stackexchange.com/a/503][How do I "group hooks"? | Solution by Jonathan Leech-Pepin]]
+** Source
 
-* Source
+   #+BEGIN_SRC emacs-lisp
+   ;; Sophie Bosio's Prettifying Org Mode
 
-  #+BEGIN_SRC emacs-lisp
-  ;; Sophie Bosio's Prettifying Org Mode
+   ;; Resize Org headings
+   (dolist (face '((org-level-1 . 1.35)
+         		(org-level-2 . 1.3)
+         		(org-level-3 . 1.2)
+         		(org-level-4 . 1.1)
+         		(org-level-5 . 1.1)
+         		(org-level-6 . 1.1)
+         		(org-level-7 . 1.1)
+         		(org-level-8 . 1.1)))
+     (set-face-attribute (car face) nil :font "JetBrains Mono" :weight 'bold :height (cdr face)))
 
-  ;; Resize Org headings
-  (dolist (face '((org-level-1 . 1.35)
-  		(org-level-2 . 1.3)
-  		(org-level-3 . 1.2)
-  		(org-level-4 . 1.1)
-  		(org-level-5 . 1.1)
-  		(org-level-6 . 1.1)
-  		(org-level-7 . 1.1)
-  		(org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "JetBrains Mono" :weight 'bold :height (cdr face)))
+   ;; Make the document title a bit bigger
+   (set-face-attribute 'org-document-title nil :font "JetBrains Mono" :weight
+         		    'bold :height 1.8)
 
-  ;; Make the document title a bit bigger
-  (set-face-attribute 'org-document-title nil :font "JetBrains Mono" :weight
-  		    'bold :height 1.8)
+   (require 'org-indent)
+   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-  (require 'org-indent)
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+   ;; (set-face-attribute 'org-block nil            :foreground nil :height 0.85)
+   (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
+   (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
+   (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
+   (set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+         							 fixed-pitch))
+   (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+   (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
-  (set-face-attribute 'org-block nil            :foreground nil :height 0.85)
-  (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch) :height 0.85)
-  (set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
-  							 fixed-pitch))
-  (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+   (custom-theme-set-faces
+    'gruvbox
+    '(variable-pitch ((t (:family "JetBrains Mono" :height 180 :weight thin))))
+    '(fixed-pitch ((t ( :family "JetBrains Mono" :height 160)))))
 
-  (custom-theme-set-faces
-   'gruvbox
-   '(variable-pitch ((t (:family "JetBrains Mono" :height 180 :weight thin))))
-   '(fixed-pitch ((t ( :family "JetBrains Mono" :height 160)))))
+   (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
+   (plist-put org-format-latex-options :scale 2)
 
-  (plist-put org-format-latex-options :scale 2)
+   (setq org-adapt-indentation t
+         org-hide-leading-stars t
+         org-pretty-entities t
+         org-ellipsis "  ·")
 
-  (setq org-adapt-indentation t
-        org-hide-leading-stars t
-        org-pretty-entities t
-        org-ellipsis "  ·")
-
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-edit-src-content-indentation 0)
+   (setq org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-edit-src-content-indentation 0)
 
 
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-edit-src-content-indentation 0)
+   (setq org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-edit-src-content-indentation 0)
 
-  (use-package org-appear
-    :commands (org-appear-mode)
-    :hook     (org-mode . org-appear-mode)
-    :config
-    (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
-    (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
-          org-appear-autolinks      t   ; Show links
-  	org-appear-autosubmarkers t)) ; Show sub- and superscripts
+   (use-package org-appear
+     :commands (org-appear-mode)
+     :hook     (org-mode . org-appear-mode)
+     :config
+     (setq org-hide-emphasis-markers t)  ; Must be activated for org-appear to work
+     (setq org-appear-autoemphasis   t   ; Show bold, italics, verbatim, etc.
+           org-appear-autolinks      t   ; Show links
+         	org-appear-autosubmarkers t)) ; Show sub- and superscripts
 
-  (setq org-log-done                       t
-        org-auto-align-tags                t
-        org-tags-column                    -80
-        org-fold-catch-invisible-edits     'show-and-error
-        org-special-ctrl-a/e               t
-        org-insert-heading-respect-content t)
+   (setq org-log-done                       t
+         org-auto-align-tags                t
+         org-tags-column                    -80
+         org-fold-catch-invisible-edits     'show-and-error
+         org-special-ctrl-a/e               t
+         org-insert-heading-respect-content t)
 
-  (plist-put org-format-latex-options :scale 1.35)
+   (plist-put org-format-latex-options :scale 1.35)
 
-  (use-package org-fragtog
-    :hook (org-mode-hook . org-fragtog-mode))
+   (use-package org-fragtog
+     :hook (org-mode-hook . org-fragtog-mode))
 
-  ;; Soft word wrapping
-  (add-hook 'org-mode-hook 'visual-line-mode)
+   ;; Soft word wrapping
+   (add-hook 'org-mode-hook 'visual-line-mode)
 
-  (use-package olivetti
-    :config
-    (setq olivetti-body-width 120)
-    :hook (org-mode-hook . olivetti-mode) )
+   (use-package olivetti
+     :config
+     (setq olivetti-body-width 120)
+     :hook (org-mode-hook . olivetti-mode) )
 
-  (setq org-todo-keywords
-        '((sequence
-  	 "TODO(t)" "WAIT(w)" "READ(r)" "PROG(p)" ; Needs further action
-  	 "|"
-  	 "DONE(d)")))                            ; Needs no action currently
+   (setq org-todo-keywords
+         (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                 (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 
-  (use-package org-superstar
-    :config
-    (setq org-superstar-leading-bullet " ")
-    (setq org-superstar-headline-bullets-list '("◉" "○" "⚬" "◈" "◇"))
-    (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
-    (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
-                                            ("WAIT"  . 9744)
-                                            ("READ"  . 9744)
-                                            ("PROG"  . 9744)
-  					  ("DONE"  . 9745)))
-    :hook (org-mode . org-superstar-mode))
-  #+END_SRC
+
+
+   (setq-default org-enforce-todo-dependencies t)
+
+   (setq org-todo-keyword-faces
+         (quote (("TODO" :foreground "red" :weight bold)
+                 ("NEXT" :foreground "blue" :weight bold)
+                 ("DONE" :foreground "forest green" :weight bold)
+                 ("WAITING" :foreground "orange" :weight bold)
+                 ("HOLD" :foreground "magenta" :weight bold)
+                 ("CANCELLED" :foreground "forest green" :weight bold)
+                 ("MEETING" :foreground "forest green" :weight bold)
+                 ("PHONE" :foreground "forest green" :weight bold))))
+   ;; I don't wan't the keywords in my exports by default
+   (setq-default org-export-with-todo-keywords nil)
+
+   (use-package org-superstar)
+
+   (with-eval-after-load 'org-superstar
+     (setq org-superstar-item-bullet-alist
+           '((?* . ?•)
+             (?+ . ?➤)
+             (?- . ?•)))
+     (setq org-superstar-headline-bullets-list '(?\d))
+     (setq org-superstar-special-todo-items t)
+     (setq org-superstar-remove-leading-stars t)
+     (setq org-hide-leading-stars t)
+     ;; Enable custom bullets for TODO items
+     (setq org-superstar-todo-bullet-alist
+           '(("TODO" . ?☐)
+             ("NEXT" . ?✒)
+             ("HOLD" . ?✰)
+             ("WAITING" . ?☕)
+             ("CANCELLED" . ?✘)
+             ("DONE" . ?✔)))
+     (org-superstar-restart))
+
+   (setq org-ellipsis " ▼ ")
+   #+END_SRC
 
 * Mode line
 
