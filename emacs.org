@@ -122,9 +122,34 @@
     #+END_SRC
 
 ** Language Modes
-
+   
    Making sure languages I want to use are installed.
    
+*** Web
+
+    This mode provides the ability to work with web templates effectively.
+    
+**** References
+
+**** Source
+     
+    #+BEGIN_SRC emacs-lisp
+      (use-package web-mode
+        :ensure t
+        :mode
+        (("\\.phtml\\'" . web-mode)
+         ("\\.blade\\.php\\'" . web-mode)
+         ("\\.php\\'" . php-mode)
+         ("\\.twig\\'" . web-mode)
+         ("\\.tpl\\'" . web-mode)
+         ("\\.[agj]sp\\'" . web-mode)
+         ("\\.as[cp]x\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.djhtml\\'" . web-mode)
+         ("\\.blade\\.php\\'" . web-mode)))
+   #+END_SRC
+
 *** Go
 
     #+BEGIN_SRC emacs-lisp
@@ -134,7 +159,9 @@
 *** PHP
 
     #+BEGIN_SRC emacs-lisp
-    (use-package php-mode)
+    (use-package php-mode
+      :config
+      (setq php-mode-template-compatibility nil))
     #+END_SRC
 
 ** LSP-Mode
@@ -146,6 +173,7 @@
     - [[https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/][Migrating from LSP-Mode to Eglot | Andrey Listopadov]]
     - [[https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package][LSP Mode Installation #use-package]]
     - [[https://github.com/emacs-lsp/lsp-mode/issues/3577][Eager macro-expansion failure in lsp-terraform.el]]
+    - [[https://www.reddit.com/r/emacs/comments/rk5eol/anyone_got_a_lsp_setup_with_php/][anyone got a lsp setup with php? | u/Winter-Country]]
 
 *** Source
 
@@ -159,9 +187,13 @@
     	 (lsp-mode . lsp-enable-which-key-integration))
       :config
       (setq lsp-completion-provider :none)
+      (setq lsp-disabled-clients '(php-ls))
       ;; Fix for a weird bug
       (delete 'lsp-terraform lsp-client-packages)
       :commands lsp)
+
+    ;; Making web-mode and lsp-mode play nice...
+    (add-hook 'web-mode-hook #'lsp)
     #+END_SRC
 
 ** Completion at Point
