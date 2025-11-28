@@ -23,7 +23,7 @@
 * Emacs Configuration
 
   This is just some general Emacs configuration.
-
+  
 ** Reference
 
    - [[https://sophiebos.io/posts/first-emacs-config/][Building Your First Emacs Config | Sophie Bosio]]
@@ -44,7 +44,7 @@
      (set-frame-font "JetBrains Mono" nil t))
 
    #+END_SRC
-
+   
 * Package Configuration
 
   Below are all the packages I use and have configured to suit my workflow. As mentioned before, references /should/ be listed as a sub-heading amongst the source code.
@@ -531,9 +531,9 @@
 * Keybinds
 
   Keybinds for my emacs config using general.
-
-** TODO Find more keybinds for this.
   
+** TODO Find more keybinds for this.
+   
    #+BEGIN_SRC emacs-lisp
    ;; File keybinds
    (devjj/keybinds
