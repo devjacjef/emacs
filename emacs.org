@@ -533,4 +533,12 @@
      "o" '(:ignore t :which-key "Open")
      "og" '(magit :which-key "Open Magit")
      "ot" '(vterm-new :which-key "Open Vterm"))
+
+   (devjj/keybinds
+     "c" '(:ignore t :which-key "Code"))
+
+   (add-hook 'lsp-mode-hook
+   	  (lambda ()
+   	    (devjj/keybinds
+   	      "ca" '(lsp-execute-code-action :which-key "Code Actions"))))
    #+END_SRC
