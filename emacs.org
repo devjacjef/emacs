@@ -248,6 +248,32 @@ I've used magit a lot and it's one of the nicest tools I have used in Emacs.
 *** References
 
 *** Source
+
+** General
+
+   /Unsure if this should have it's own section or if I should keep it here cause of =general.el=./
+
+*** TODO Define fundamental keybinds
+
+    Define keybinds for things like opening files, handling buffers, opening buffers for magit, docker...
+   
+*** References
+
+    - [[https://alexforsale.github.io/posts/emacs-general/][Emacs general.el | Kristain Alexander P]]
+    - [[https://systemcrafters.net/emacs-from-scratch/key-bindings-and-evil/][Key Bindings and Evil | System Crafters]]
+    
+*** Source
+
+#+BEGIN_SRC emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup t)
+
+  (general-create-definer devjj/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC"))
+#+END_SRC
     
 * Org Mode Configuration
 
@@ -344,7 +370,7 @@ There are a view things I would like to tidy up but those can be worked on later
 
 (use-package olivetti
   :config
-  (setq olivetti-body-width 80)
+  (setq olivetti-body-width 120)
   :hook (org-mode-hook . olivetti-mode) )
 
 (setq org-todo-keywords
@@ -388,7 +414,7 @@ I really like how this modeline has come out now. It's a lot more minimal.
     		(:propertize " " display (raise -0.4)) ;; Bottom padding
 
     		
-    		(:propertize "λ " face font-lock-comment-face)
+    		(:propertize "λ  " face font-lock-comment-face)
   		
   		(:propertize (format "  %s  " evil-mode-line-tag)
   			     'face 'mode-line)
@@ -422,4 +448,30 @@ I really like how this modeline has come out now. It's a lot more minimal.
     		
     		;; Line and column numbers
     		(:propertize "%4l:%c" face mode-line-buffer-id)))
+  #+END_SRC
+
+* Keybinds
+
+  Keybinds for my emacs config using general.
+
+** TODO Find more keybinds for this.
+  
+  #+BEGIN_SRC emacs-lisp
+    ;; File keybinds
+    (devjj/leader-keys
+      "f" '(:ignore t :which-key "File")
+      "ff" '(find-file :which-key "Find File")
+      "fs" '(save-file :which-key "File Save")
+      "fp" '(find-file-at-point :which-key "File at point"))
+
+    ;; Buffer keybinds
+    (devjj/leader-keys
+      "b" '(:ignore t :which-key "Buffer")
+      "bb" '(switch-to-buffer :which-key "Switch to buffer"))
+
+    ;; Quit keybinds
+    (devjj/leader-keys
+      "q" '(:ignore t :which-key "Quit")
+      "qq" '(save-buffers-kill-emacs :which-key "Quit Emacs")
+      "qQ" '(kill-emacs :which-key "Force Quit Emacs"))
   #+END_SRC
