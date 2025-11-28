@@ -562,7 +562,9 @@
      "c" '(:ignore t :which-key "Code"))
 
    (add-hook 'lsp-mode-hook
-   	  (lambda ()
-   	    (devjj/keybinds
-   	      "ca" '(lsp-execute-code-action :which-key "Code Actions"))))
+       (lambda ()
+         (devjj/keybinds
+           "ca" '(lsp-execute-code-action :which-key "Code Actions"))))
    #+END_SRC
+   
+   
