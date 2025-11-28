@@ -244,16 +244,29 @@
 *** References
 
     - [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm]]
+    - [[http://xahlee.info/emacs/emacs/emacs_new_empty_buffer.html][Emacs: New Empty Buffer 📜 | Xah Lee]]
+    - [[https://github.com/akermu/emacs-libvterm/issues/24#issuecomment-438048042][Close buffer and (optional) window when a vterm process is finished.]]
 
 *** Source
 
     #+BEGIN_SRC emacs-lisp
     (use-package vterm
+      :ensure t
       :config
+      (add-to-list 'vterm-exit-functions
+    	       (lambda (_ _)
+    		 (let* ((buffer (current-buffer))
+    			(window (get-buffer-window buffer)))
+    		   (when (not (one-window-p))
+    		     (delete-window window))
+    		   (kill-buffer buffer))))
+      
       (defun vterm-new ()
+        "Create a new empty buffer"
         (interactive)
-        (vterm (generate-new-buffer "*vterm*")))
-      )
+        (split-window-below)
+        (other-window 1)
+        (vterm)))
     #+END_SRC
 
 ** Tools for reading documents
@@ -495,5 +508,5 @@
    (devjj/keybinds
      "o" '(:ignore t :which-key "Open")
      "og" '(magit :which-key "Open Magit")
-     "ot" '(vterm :which-key "Open Vterm"))
+     "ot" '(vterm-new :which-key "Open Vterm"))
    #+END_SRC
