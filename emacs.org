@@ -121,6 +121,22 @@
       (evil-collection-init))
     #+END_SRC
 
+** Language Modes
+
+   Making sure languages I want to use are installed.
+   
+*** Go
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package go-mode)
+    #+END_SRC
+    
+*** PHP
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package go-mode)
+    #+END_SRC
+
 ** LSP-Mode
 
    I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
