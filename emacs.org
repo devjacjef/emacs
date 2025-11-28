@@ -134,7 +134,7 @@
 *** PHP
 
     #+BEGIN_SRC emacs-lisp
-    (use-package go-mode)
+    (use-package php-mode)
     #+END_SRC
 
 ** LSP-Mode
