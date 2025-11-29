@@ -164,6 +164,13 @@
       (setq php-mode-template-compatibility nil))
     #+END_SRC
 
+
+*** Java
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package lsp-java)
+    #+END_SRC
+    
 ** LSP-Mode
 
    I chose to use LSP-Mode based on what /Andrey Listopadov/ wrote about Eglot. While the post is quite old, I am sure that it's relevant in part.
@@ -184,6 +191,7 @@
       :hook (
     	 (go-mode . lsp)
     	 (php-mode . lsp)
+    	 (java-mode . lsp)
     	 (lsp-mode . lsp-enable-which-key-integration))
       :config
       (setq lsp-completion-provider :none)
